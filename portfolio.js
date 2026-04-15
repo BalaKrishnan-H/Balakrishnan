@@ -299,13 +299,25 @@ gsap.from('.hero-description', {
     delay: 1.3
 });
 
+const ctaBtns = document.querySelectorAll('.hero-cta .btn');
+ctaBtns.forEach(btn => {
+    btn.style.opacity = '1';
+    btn.style.visibility = 'visible';
+});
+
 gsap.from('.hero-cta .btn', {
     opacity: 0,
     y: 30,
     duration: 0.6,
     stagger: 0.15,
     ease: 'back.out(1.7)',
-    delay: 1.5
+    delay: 1.5,
+    onComplete: () => {
+        ctaBtns.forEach(btn => {
+            btn.style.opacity = '1';
+            btn.style.visibility = 'visible';
+        });
+    }
 });
 
 gsap.from('.hero-stats', {

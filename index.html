@@ -20,8 +20,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
-    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
 
 </head>
 <body>
@@ -1104,18 +1105,6 @@
                     </div>
                 </div>
 
-                
-                <script>
-                    
-                    emailjs.init("lli5jV6AjE77bZgax");
-                    emailjs.sendForm(
-                        "service_xqvzeni",                  // Step 1
-                        "template_ahwddld",                 // Step 2
-                        this
-                    )
-
-                
-                </script>
 
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
@@ -1148,27 +1137,7 @@
                     </button>
                 </form>
                 
-                <script>
-                    document.getElementById("contactForm").addEventListener("submit", function(e) {
-                        e.preventDefault();
-                
-                        const recaptchaResponse = grecaptcha.getResponse();
-                        if (recaptchaResponse.length === 0) {
-                            alert("Please complete the reCAPTCHA verification.");
-                            return;
-                        }
-                
-                        emailjs.sendForm("service_xqvzeni", "template_ahwddld", this)
-                            .then(function() {
-                                alert("Message sent successfully!");
-                                document.getElementById("contactForm").reset();
-                                grecaptcha.reset();
-                            }, function(error) {
-                                alert("Failed to send message. Please try again.");
-                                console.error("EmailJS error:", error);
-                            });
-                    });
-                </script>
+              
             </div>
         </div>
     </section>

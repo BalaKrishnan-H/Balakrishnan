@@ -456,16 +456,29 @@ gsap.from('.about-text p', {
     ease: 'power2.out'
 });
 
+const infoCards = document.querySelectorAll('.info-card');
+infoCards.forEach(card => {
+    card.style.opacity = '1';
+    card.style.visibility = 'visible';
+});
+
 gsap.from('.info-card', {
     scrollTrigger: {
         trigger: '.about-info',
-        start: 'top 80%',
+        start: 'top 90%',
+        once: true,
     },
     opacity: 0,
     x: 50,
     duration: 1,
     stagger: 0.2,
-    ease: 'power3.out'
+    ease: 'power3.out',
+    onComplete: () => {
+        infoCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+        });
+    }
 });
 
 gsap.from('.profile-intro', {
@@ -514,28 +527,31 @@ profileCards.forEach((card, index) => {
     });
 });
 
-// Contact Form with EmailJS and reCAPTCHA
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+// Contact Form with EmailJS and reCAPTCHA Enterprise
+grecaptcha.enterprise.ready(function() {
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (recaptchaResponse.length === 0) {
-        alert("Please complete the reCAPTCHA verification.");
-        return;
-    }
+        const form = this;
+        const recaptchaResponse = grecaptcha.enterprise.getResponse();
+        if (!recaptchaResponse || recaptchaResponse.length === 0) {
+            alert("Please complete the reCAPTCHA verification.");
+            return;
+        }
 
-    const btn = document.querySelector(".submit-btn span");
-    btn.textContent = "Sending...";
+        const btn = document.querySelector(".submit-btn span");
+        btn.textContent = "Sending...";
 
-    emailjs.sendForm("service_xqvzeni", "template_ahwddld", this)
-        .then(function() {
-            alert("Message sent successfully!");
-            document.getElementById("contactForm").reset();
-            grecaptcha.reset();
-            btn.textContent = "Send Message";
-        }, function(error) {
-            alert("Failed to send: " + JSON.stringify(error));
-            console.error("EmailJS error:", error);
-            btn.textContent = "Send Message";
-        });
+        emailjs.sendForm("service_xqvzeni", "template_ahwddld", form)
+            .then(function() {
+                alert("Message sent successfully!");
+                document.getElementById("contactForm").reset();
+                grecaptcha.enterprise.reset();
+                btn.textContent = "Send Message";
+            }, function(error) {
+                alert("Failed to send: " + JSON.stringify(error));
+                console.error("EmailJS error:", error);
+                btn.textContent = "Send Message";
+            });
+    });
 });
